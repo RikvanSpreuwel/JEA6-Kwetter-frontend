@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <div class="card w-100 mb-4">
+        <div class="card-header">
+          <h4 style="display:inline"><small>Search results for: "<small>{{searchParam}}</small>"</small></h4>
+          <button class="btn btn-danger my-2 my-sm-0 float-right" (click)="clear()">Close</button>
+        </div>
+        <div class="card-body">
+          <div *ngIf="searchResults.length > 0" class="list-group bordered">
+            <a *ngFor="let kwetter of searchResults" routerLink="/profile/{{kwetter.author.id}}"
+              class="list-group-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1">{{kwetter.author.userName}}</h6>
+                <small>{{kwetter.postedOn}}</small>
+              </div>
+              <p class="mb-1">{{kwetter.message}}</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>

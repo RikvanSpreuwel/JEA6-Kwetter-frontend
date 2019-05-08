@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+
+@import "~ionicons/dist/css/ionicons.min.css";
+
+@import '~ngx-toastr/toastr.css';
+
+body { 
+    padding-top: 65px; 
+}
+
+.hover:hover {
+    background-color: #e8e8e8;
+    cursor: pointer;
+    width: inherit;
+  }
