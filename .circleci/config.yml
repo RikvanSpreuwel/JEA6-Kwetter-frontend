@@ -1,0 +1,32 @@
+version: 2
+jobs: 
+  build:
+    working_directory: ~/kwetter-frontend
+
+    docker:
+      - image: circleci/node:8-browsers
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: kwetter-frontend-{{ checksum package.json }}
+
+      - run: npm install
+
+      - save_cache:
+          paths:
+            - ~/"node_modules"
+          key: kwetter-frontend-{{ checksum package.json }}
+
+      - run:
+          name: Linting
+          command: npm run lint
+
+      - run:
+          name: Testing
+          command: npm run test
+
+      - run:
+          name: building
+          command: npm run build
