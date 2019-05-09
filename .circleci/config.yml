@@ -10,14 +10,14 @@ jobs:
       - checkout
 
       - restore_cache:
-          key: kwetter-frontend-{{ checksum "package.json" }}
+          key: kwetter-frontend-{{ .Branch }}-{{ checksum "package.json" }}
 
       - run: npm install
 
       - save_cache:
           paths:
             - ~/"node_modules"
-          key: kwetter-frontend-{{ checksum "package.json" }}
+          key: kwetter-frontend-{{ .Branch }}-{{ checksum "package.json" }}
 
       - run:
           name: Linting
@@ -25,7 +25,7 @@ jobs:
 
       - run:
           name: Testing
-          command: npm run test
+          command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
       - run:
           name: building
