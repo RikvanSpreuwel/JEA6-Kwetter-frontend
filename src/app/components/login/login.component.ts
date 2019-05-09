@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
       });
    }
 
-// tslint:disable-next-line: no-empty
   public ngOnInit() {
   }
 

@@ -1,5 +1,11 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { ToastrService } from "ngx-toastr";
+import { AuthenticationService } from "src/app/services/api/authentication/authentication.service";
+import { AuthenticationServiceSpy } from "src/utils/test/authenticationServiceSpy";
+import { ToastrServiceStub } from "src/utils/test/toastrServiceStub";
 import { LoginComponent } from "./login.component";
 
 describe("LoginComponent", () => {
@@ -8,9 +14,19 @@ describe("LoginComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginComponent ],
-    })
-    .compileComponents();
+        declarations: [ LoginComponent ],
+        imports: [FormsModule, ReactiveFormsModule],
+        providers: [
+            { provide: AuthenticationService, useValue: {} },
+            { provide: ToastrService, useValue: ToastrServiceStub },
+        ],
+    }).overrideComponent(LoginComponent, {
+        set: {
+            providers: [
+                { provide: AuthenticationService, useClass: AuthenticationServiceSpy },
+            ],
+        },
+    }).compileComponents();
   }));
 
   beforeEach(() => {
