@@ -1,14 +1,14 @@
 import { Injectable } from "@angular/core";
-import { Http, Headers, Response } from '@angular/http';
-import { map, catchError } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
+import { Headers, Http, Response } from "@angular/http";
+import { Router } from "@angular/router";
+import { JwtHelperService } from "@auth0/angular-jwt";
+import { ToastrService } from "ngx-toastr";
+import { Observable, of } from "rxjs";
+import { catchError, map } from "rxjs/operators";
+import { environment } from "src/environments/environment";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class AuthenticationService {
   private readonly LOGIN_URL = "/oauth/token";
@@ -31,7 +31,7 @@ export class AuthenticationService {
         this.toastrService.success("", "Succesfully logged in!");
         this.router.navigate(["/"]);
       } else {
-        this.toastrService.error('', 'Incorrect login credentials!');
+        this.toastrService.error("", "Incorrect login credentials!");
       }
     });
   }
@@ -45,7 +45,7 @@ export class AuthenticationService {
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     headers.append("Authorization", "Basic " + btoa(this.TOKEN_AUTH_CLIENTID + ":" + this.TOKEN_AUTH_CLIENTSECRET));
 
-    return this.http.post(environment.webApiBaseUrl + this.LOGIN_URL, body, { headers: headers })
+    return this.http.post(environment.webApiBaseUrl + this.LOGIN_URL, body, { headers })
       .pipe(map((res) => res.json()))
       .pipe(catchError(this.handleError("login", [])))
       .pipe(map((res: any) => {
@@ -61,16 +61,19 @@ export class AuthenticationService {
     this.router.navigate(["/login"]);
   }
 
+  public isLoggedIn() {
+    return localStorage.getItem(this.TOKEN_NAME) === null ? false
+     : !this.isTokenExpired(localStorage.getItem(this.TOKEN_NAME));
+  }
+
   /**
   * Handle Http operation that failed.
   * Let the app continue.
-  * @param operation - name of the operation that failed
-  * @param result - optional value to return as the observable result
+  * @param operation  name of the operation that failed
+  * @param result     optional value to return as the observable result
   */
-  private handleError<T>(operation = 'operation', result?: T) {
+  private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
-      console.log('AuthenticationService#handleError - ' + error);
-
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
@@ -93,10 +96,5 @@ export class AuthenticationService {
     } else {
       return false;
     }
-  }
-
-  public isLoggedIn() {
-    return localStorage.getItem(this.TOKEN_NAME) === null ? false
-     : !this.isTokenExpired(localStorage.getItem(this.TOKEN_NAME));
   }
 }

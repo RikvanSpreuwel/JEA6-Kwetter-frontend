@@ -1,13 +1,13 @@
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 import { Kwetter } from "src/app/models/kwetter";
+import { Role } from "src/app/models/role";
 import { User } from "src/app/models/user";
+import { AuthenticationService } from "src/app/services/api/authentication/authentication.service";
 import { KwetterService } from "src/app/services/api/kwetter/kwetter.service";
 import { UserService } from "src/app/services/api/user/user.service";
-import { Role } from 'src/app/models/role';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from 'src/app/services/api/authentication/authentication.service';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: "app-home",
@@ -37,16 +37,15 @@ export class HomeComponent implements OnInit {
     this.authenticationService.isLoggedIn() ? this.userService.getCurrentUser().subscribe((response) => {
       this.loggedInUser = response as User;
 
-      this.kwetterService.getTimeline(this.loggedInUser.id).subscribe((response) => {
-        this.timeline = response as Kwetter[];
-        console.log(this.timeline);
+      this.kwetterService.getTimeline(this.loggedInUser.id).subscribe((result) => {
+        this.timeline = result as Kwetter[];
       });
     })
     : this.router.navigate(["/login"]);
   }
 
   public postKwetter(kwetter) {
-    if (kwetter === undefined || kwetter.kweet === undefined|| kwetter.kweet === "") { return; }
+    if (kwetter === undefined || kwetter.kweet === undefined || kwetter.kweet === "") { return; }
 
     this.kwetterService.createKwetter(kwetter.kweet, this.loggedInUser.id).subscribe((response) => {
       if (response !== undefined) {

@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/services/api/authentication/authentication.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { ToastrService } from "ngx-toastr";
+import { AuthenticationService } from "src/app/services/api/authentication/authentication.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: "app-login",
+  styleUrls: ["./login.component.css"],
+  templateUrl: "./login.component.html",
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
@@ -16,12 +16,13 @@ export class LoginComponent implements OnInit {
     private toastrService: ToastrService,
     private formBuilder: FormBuilder) {
       this.loginForm = formBuilder.group({
-        username : new FormControl("", Validators.compose([Validators.required])),
         password : new FormControl("", Validators.compose([Validators.required])),
+        username : new FormControl("", Validators.compose([Validators.required])),
       });
    }
 
-  ngOnInit() {
+// tslint:disable-next-line: no-empty
+  public ngOnInit() {
   }
 
   public login(credentials) {

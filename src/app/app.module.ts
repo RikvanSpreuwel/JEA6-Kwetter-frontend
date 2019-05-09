@@ -2,19 +2,19 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppComponent } from "./app.component";
 
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpModule } from "@angular/http";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { JwtModule } from "@auth0/angular-jwt";
+import { ToastrModule } from "ngx-toastr";
 import { HomeComponent } from "./components/home/home.component";
+import { LoginComponent } from "./components/login/login.component";
 import { NavbarComponent } from "./components/navbar/navbar.component";
 import { ProfileComponent } from "./components/profile/profile.component";
+import { SearchResultsComponent } from "./components/search-results/search-results.component";
+import { JwtHttpInterceptor } from "./interceptors/jwtHttpInterceptor";
 import { AppRoutingModule } from "./routing/app-routing.module";
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LoginComponent } from './components/login/login.component';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { JwtModule } from '@auth0/angular-jwt';
-import { ToastrModule } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpModule } from '@angular/http';
-import { JwtHttpInterceptor } from './interceptors/jwtHttpInterceptor';
-import { SearchResultsComponent } from './components/search-results/search-results.component';
 
 
 export function getAccessToken(): string {
@@ -22,7 +22,7 @@ export function getAccessToken(): string {
 }
 
 export const jwtConfig = {
-  tokenGetter: getAccessToken
+  tokenGetter: getAccessToken,
 };
 
 
@@ -45,10 +45,10 @@ export const jwtConfig = {
     FormsModule,
     ReactiveFormsModule,
     JwtModule.forRoot({
-      config: jwtConfig
+      config: jwtConfig,
     }),
     ToastrModule.forRoot({
-      enableHtml: true
+      enableHtml: true,
     }),
   ],
   providers: [

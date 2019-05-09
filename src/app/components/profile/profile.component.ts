@@ -1,21 +1,21 @@
 import { Component, OnInit } from "@angular/core";
-import { Kwetter } from 'src/app/models/kwetter';
-import { Role } from 'src/app/models/role';
-import { User } from 'src/app/models/user';
-import { UserService } from 'src/app/services/api/user/user.service';
-import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
+import { Kwetter } from "src/app/models/kwetter";
+import { Role } from "src/app/models/role";
+import { User } from "src/app/models/user";
+import { UserService } from "src/app/services/api/user/user.service";
 
 @Component({
   selector: "app-profile",
-  templateUrl: "./profile.component.html",
   styleUrls: ["./profile.component.css"],
+  templateUrl: "./profile.component.html",
 })
 export class ProfileComponent implements OnInit {
   public loggedInUser: User;
   public userProfile: User;
   
-  private loggedInUserFollowingUserProfile:boolean = false;
+  private loggedInUserFollowingUserProfile: boolean = false;
 
 
   constructor(
@@ -24,14 +24,14 @@ export class ProfileComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   public ngOnInit() {
-    this.route.paramMap.subscribe(pmap => this.getUser(pmap.get("id")));
+    this.route.paramMap.subscribe((pmap) => this.getUser(pmap.get("id")));
     this.userService.getCurrentUser().subscribe((response) => {
       this.loggedInUser = response as User;
       this.isBeingFollowedByLoggedInUser();
     });
   }
 
-  private getUser(userId: string){
+  private getUser(userId: string) {
     this.userService.getById(userId).subscribe((response) => {
       this.userProfile = response as User;
       this.isBeingFollowedByLoggedInUser();
@@ -72,5 +72,5 @@ export class ProfileComponent implements OnInit {
         this.loggedInUserFollowingUserProfile = true;
       }
     });
-  };
+  }
 }
