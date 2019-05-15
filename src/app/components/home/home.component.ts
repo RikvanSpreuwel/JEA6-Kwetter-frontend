@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
     this.authenticationService.isLoggedIn() ? this.userService.getCurrentUser().subscribe((response) => {
       this.loggedInUser = response as User;
 
-      this.kwetterService.getTimeline(this.loggedInUser.id).subscribe((result) => {
+      this.kwetterService.getTimeline(this.loggedInUser["_links"].Timeline.href).subscribe((result) => {
         this.timeline = result as Kwetter[];
       });
     })
@@ -47,9 +47,10 @@ export class HomeComponent implements OnInit {
   public postKwetter(kwetter) {
     if (kwetter === undefined || kwetter.kweet === undefined || kwetter.kweet === "") { return; }
 
-    this.kwetterService.createKwetter(kwetter.kweet, this.loggedInUser.id).subscribe((response) => {
+    this.kwetterService.createKwetter(kwetter.kweet, this.loggedInUser.userId).subscribe((response) => {
       if (response !== undefined) {
         this.loggedInUser.kwetters.push(response as Kwetter);
+        this.timeline.unshift(response as Kwetter);
         this.toastrService.success("", "Succesfully posted kweet: " + kwetter.kweet);
         this.getFormControl("kweet").setValue("");
       }

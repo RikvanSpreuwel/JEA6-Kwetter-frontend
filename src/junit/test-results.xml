@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
-<testsuite name="HeadlessChrome 74.0.3729 (Windows 10.0.0)" package="" timestamp="2019-05-09T12:31:33" id="0" hostname="Omen-Rik" tests="10" errors="0" failures="0" time="0.725">
+<testsuite name="Chrome 74.0.3729 (Windows 10.0.0)" package="" timestamp="2019-05-15T07:32:02" id="0" hostname="Omen-Rik" tests="10" errors="0" failures="0" time="0.78">
   <properties>
-    <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/74.0.3729.131 Safari/537.36"/>
+    <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36"/>
   </properties>
-  <testcase name="AppComponent should create the app" time="0.19" classname="AppComponent"/>
-  <testcase name="AppComponent should have as title 'Kwetter'" time="0.05" classname="AppComponent"/>
-  <testcase name="HomeComponent should create" time="0.161" classname="HomeComponent"/>
-  <testcase name="LoginComponent should create" time="0.14" classname="LoginComponent"/>
-  <testcase name="NavbarComponent should create" time="0.055" classname="NavbarComponent"/>
-  <testcase name="ProfileComponent should create" time="0.06" classname="ProfileComponent"/>
-  <testcase name="SearchResultsComponent should create" time="0.033" classname="SearchResultsComponent"/>
-  <testcase name="AuthenticationService should be created" time="0.019" classname="AuthenticationService"/>
-  <testcase name="KwetterService should be created" time="0.009" classname="KwetterService"/>
-  <testcase name="UserService should be created" time="0.008" classname="UserService"/>
+  <testcase name="AppComponent should create the app" time="0.127" classname="AppComponent"/>
+  <testcase name="AppComponent should have as title 'Kwetter'" time="0.036" classname="AppComponent"/>
+  <testcase name="HomeComponent should create" time="0.152" classname="HomeComponent"/>
+  <testcase name="LoginComponent should create" time="0.245" classname="LoginComponent"/>
+  <testcase name="NavbarComponent should create" time="0.09" classname="NavbarComponent"/>
+  <testcase name="ProfileComponent should create" time="0.056" classname="ProfileComponent"/>
+  <testcase name="SearchResultsComponent should create" time="0.039" classname="SearchResultsComponent"/>
+  <testcase name="AuthenticationService should be created" time="0.018" classname="AuthenticationService"/>
+  <testcase name="KwetterService should be created" time="0.008" classname="KwetterService"/>
+  <testcase name="UserService should be created" time="0.009" classname="UserService"/>
   <system-out>
     <![CDATA[
 ]]>

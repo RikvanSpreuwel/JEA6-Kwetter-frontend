@@ -18,19 +18,19 @@ export class KwetterService {
   public get(): Observable<Kwetter[]> {
     return this.http.get<Kwetter[]>(this.kwetterApiUrl)
       .pipe(catchError(this.handleError("get", [])))
-      .pipe(map((res) => res));
+      .pipe(map((res) => res["_embedded"].kwetterResources));
   }
 
-  public getTimeline(userId: string): Observable<Kwetter[]> {
-    return this.http.get<Kwetter[]>(this.kwetterApiUrl + "/timeline/" + userId)
+  public getTimeline(url: string): Observable<Kwetter[]> {
+    return this.http.get<Kwetter[]>(url)
       .pipe(catchError(this.handleError("getTimeline", [])))
-      .pipe(map((res) => res));
+      .pipe(map((res) => res["_embedded"].kwetterResources));
   }
 
   public searchByMessage(message: string): Observable<Kwetter[]> {
     return this.http.get<Kwetter[]>(this.kwetterApiUrl + "/searchbymessage?message=" + message)
       .pipe(catchError(this.handleError("searchByMessage", [])))
-      .pipe(map((res) => res));
+      .pipe(map((res) => res["_embedded"].kwetterResources));
   }
 
   public createKwetter(message: string, authorId: string): Observable<Kwetter> {

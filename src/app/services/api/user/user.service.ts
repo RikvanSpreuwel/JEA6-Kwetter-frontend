@@ -18,7 +18,7 @@ export class UserService {
   public get(): Observable<User[]> {
     return this.http.get<User[]>(this.userApiUrl)
       .pipe(catchError(this.handleError("get", [])))
-      .pipe(map((res) => res));
+      .pipe(map((res) => res["_embedded"].userResources));
   }
 
   public getById(userId: string): Observable<User> {
