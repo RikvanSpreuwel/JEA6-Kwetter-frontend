@@ -28,9 +28,9 @@ jobs:
           command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadless
 
       - store_test_results:
-          path: test-results.xml
+          path: junit/test-results.xml
       - store_artifacts:
-          path: test-results.xml
+          path: junit/test-results.xml
 
       - run:
           name: building
