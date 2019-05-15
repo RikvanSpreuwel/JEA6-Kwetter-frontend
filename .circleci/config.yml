@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-sonarqube: onehq/sonarqube@0.3.0
+  sonarqube: onehq/sonarqube@0.3.0
 jobs: 
   build:
     working_directory: ~/kwetter-frontend
