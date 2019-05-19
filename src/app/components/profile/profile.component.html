@@ -57,14 +57,14 @@
           <div class="row" id="viewContainer">
             <div id="followers" class="collapse show" aria-labelledby="followers-btn" data-parent="#viewContainer">
               <ul class="list-unstyled card-body">
-                <li class="mt-3 hover" *ngFor="let user of userProfile.followers" routerLink="/profile/{{user.id}}">
+                <li class="mt-3 hover" *ngFor="let user of userProfile.followers" routerLink="/profile/{{user.userId}}">
                   (picture) {{user.userName}}</li>
               </ul>
             </div>
 
             <div id="following" class="collapse" aria-labelledby="following-btn" data-parent="#viewContainer">
               <ul class="list-unstyled card-body">
-                <li class="mt-3 hover" *ngFor="let user of userProfile.following" routerLink="/profile/{{user.id}}">
+                <li class="mt-3 hover" *ngFor="let user of userProfile.following" routerLink="/profile/{{user.userId}}">
                   (picture) {{user.userName}}</li>
               </ul>
             </div>

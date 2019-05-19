@@ -25,10 +25,12 @@ export class ProfileComponent implements OnInit {
 
   public ngOnInit() {
     this.route.paramMap.subscribe((pmap) => this.getUser(pmap.get("id")));
-    this.userService.getCurrentUser().subscribe((response) => {
-      this.loggedInUser = response as User;
-      this.isBeingFollowedByLoggedInUser();
-    });
+    this.initializeCurrentUser();
+  }
+
+  private async initializeCurrentUser() {
+    this.loggedInUser = await this.userService.getCurrentUser();
+    this.isBeingFollowedByLoggedInUser();
   }
 
   private getUser(userId: string) {
