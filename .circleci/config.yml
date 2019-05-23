@@ -1,8 +1,15 @@
 version: 2.1
-orbs:
-  sonarqube: onehq/sonarqube@0.3.0
+
+workflows:
+  version: 2.1
+  build-test:
+    jobs:
+      - build-test:
+          context:
+            Kwetter
+
 jobs: 
-  build:
+  build-test:
     working_directory: ~/kwetter-frontend
 
     docker:
@@ -29,6 +36,15 @@ jobs:
           name: Testing
           command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadless
 
+      - run:
+          name: Sonarqube
+          command: |
+            sonar-scanner \ 
+              -D"sonar.projectKey=RikvanSpreuwel_JEA6-Kwetter-frontend" 
+              -D"sonar.organization=rikvanspreuwel-github" -D"sonar.sources=." 
+              -D"sonar.host.url=https://sonarcloud.io" 
+              -D"sonar.login=$SONAR_LOGIN_BACKEND"
+              
       - store_test_results:
           path: junit
       - store_artifacts:
