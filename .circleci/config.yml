@@ -42,9 +42,12 @@ jobs:
           path: junit
 
       - run:
-          name: Sonarqube
+          name: Install Sonarqube
           command: 
-            npm i -g sonarqube-scanner
+            npm i -g sonarqube-scanner    
+            
+      - run:
+          name: Run Sonarqube
           command: |
             sonar-scanner \ 
               -D"sonar.projectKey=RikvanSpreuwel_JEA6-Kwetter-frontend" 
