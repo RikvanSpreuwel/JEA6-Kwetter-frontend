@@ -47,7 +47,7 @@ jobs:
 
       - run:
           name: Run Sonarqube
-          command: sonar-scanner -D"sonar.projectKey=RikvanSpreuwel_JEA6-Kwetter-frontend" -D"sonar.organization=rikvanspreuwel-github" -D"sonar.sources=." -D"sonar.host.url=https://sonarcloud.io" -D"sonar.login=$SONAR_LOGIN_BACKEND
+          command: sonar-scanner -D"sonar.projectKey=RikvanSpreuwel_JEA6-Kwetter-frontend" -D"sonar.organization=rikvanspreuwel-github" -D"sonar.sources=." -D"sonar.host.url=https://sonarcloud.io" -D"sonar.login=$SONAR_LOGIN_BACKEND"
 
       - run:
           name: building
