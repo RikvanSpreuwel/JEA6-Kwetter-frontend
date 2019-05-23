@@ -39,13 +39,12 @@ jobs:
       - store_test_results:
           path: junit
       - store_artifacts:
-          path: junit
+          path: junit 
 
       - run:
           name: Install Sonarqube
-          command: 
-            npm i -g sonarqube-scanner    
-            
+          command: sudo npm install -g sonarqube-scanner
+          
       - run:
           name: Run Sonarqube
           command: |
