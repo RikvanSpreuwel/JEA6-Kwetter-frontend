@@ -51,7 +51,7 @@ commands:
     steps:
       - restore_cache:
           keys: 
-            - kwetter-frontend-{{ checksum "package.json" }}
+            - kwetter-frontend-{{ .BuildNum }}-{{ checksum "package.json" }}
             - kwetter-frontend-
 
 jobs: 
@@ -71,7 +71,7 @@ jobs:
       - run: npm install
       
       - save_cache:
-          key: kwetter-frontend-{{ checksum "package.json" }}
+          key: kwetter-frontend-{{ .BuildNum }}-{{ checksum "package.json" }}
           paths:
             - project/node_modules
       - run: ls
