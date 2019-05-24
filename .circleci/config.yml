@@ -69,7 +69,7 @@ jobs:
 
       - run: ls
       - run: npm install
-
+      - run: cd node_modules && ls
       - save_cache:
           paths:
             - ~/"node_modules"
