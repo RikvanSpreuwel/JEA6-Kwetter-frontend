@@ -114,12 +114,12 @@ jobs:
       - restore_cache_dependencies
 
       - run:
-        name: Install Sonarqube
-        command: sudo npm install -g sonarqube-scanner
+          name: Install Sonarqube
+          command: sudo npm install -g sonarqube-scanner
 
       - run:
-        name: Run Sonarqube
-        command: sonar-scanner -D"sonar.projectKey=RikvanSpreuwel_JEA6-Kwetter-frontend" -D"sonar.organization=rikvanspreuwel-github" -D"sonar.sources=." -D"sonar.host.url=https://sonarcloud.io" -D"sonar.login=$SONAR_LOGIN_BACKEND"
+          name: Run Sonarqube
+          command: sonar-scanner -D"sonar.projectKey=RikvanSpreuwel_JEA6-Kwetter-frontend" -D"sonar.organization=rikvanspreuwel-github" -D"sonar.sources=." -D"sonar.host.url=https://sonarcloud.io" -D"sonar.login=$SONAR_LOGIN_BACKEND"
 
 
 
