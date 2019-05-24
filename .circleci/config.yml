@@ -82,7 +82,7 @@ jobs:
 
       - run:
           name: building
-          command: npm run build
+          command: ls && npm run build
 
       - persist_kwetter_workspace
   
