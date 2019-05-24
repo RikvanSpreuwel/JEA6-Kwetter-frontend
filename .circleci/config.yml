@@ -56,6 +56,7 @@ commands:
 
 jobs: 
   checkout:
+    working_directory: ~/kwetter-frontend
     executor: node
     steps:
       - checkout
