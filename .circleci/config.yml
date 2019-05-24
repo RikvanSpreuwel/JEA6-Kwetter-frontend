@@ -73,7 +73,7 @@ jobs:
       - save_cache:
           key: kwetter-frontend-{{ checksum "package.json" }}
           paths:
-            - node_modules
+            - kwetter-frontend/node_modules
       - run: ls
 
   build:
