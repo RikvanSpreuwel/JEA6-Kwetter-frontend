@@ -51,12 +51,11 @@ commands:
     steps:
       - restore_cache:
           keys: 
-            - kwetter-frontend-{{ .Branch }}-{{ checksum "package.json" }}
+            - kwetter-frontend-{{ checksum "package.json" }}
             - kwetter-frontend-
 
 jobs: 
   checkout:
-    working_directory: ~/kwetter-frontend
     executor: node
     steps:
       - checkout
@@ -73,7 +72,7 @@ jobs:
       - save_cache:
           paths:
             - ~/"node_modules"
-          key: kwetter-frontend-{{ .Branch }}-{{ checksum "package.json" }}
+          key: kwetter-frontend-{{ checksum "package.json" }}
 
   build:
     executor: node
