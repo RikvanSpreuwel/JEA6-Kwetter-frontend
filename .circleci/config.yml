@@ -82,6 +82,7 @@ jobs:
       - attach_kwetter_workspace
       - restore_cache_dependencies
 
+      - run: cd.. && ls
       - run:
           name: building
           command: ls && npm run build
