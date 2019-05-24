@@ -71,10 +71,9 @@ jobs:
       - run: npm install
       - run: cd node_modules && ls
       - save_cache:
+          key: kwetter-frontend-{{ checksum "package.json" }}
           paths:
             - "node_modules"
-          key: kwetter-frontend-{{ checksum "package.json" }}
-      
       - run: ls
 
   build:
