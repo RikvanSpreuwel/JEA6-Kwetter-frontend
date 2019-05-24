@@ -50,18 +50,18 @@ commands:
   restore_cache_dependencies:
     steps:
       - restore_cache:
-          key: kwetter-frontend-{{ .Branch }}-{{ checksum "package.json" }}
+          keys: 
+            - kwetter-frontend-{{ .Branch }}-{{ checksum "package.json" }}
+            - kwetter-frontend-
 
 jobs: 
   checkout:
-    working_directory: ~/kwetter-frontend
     executor: node
     steps:
       - checkout
       - persist_kwetter_workspace
   
   dependencies:
-    working_directory: ~/kwetter-frontend
     executor: node
     steps: 
       - attach_kwetter_workspace
@@ -75,7 +75,6 @@ jobs:
           key: kwetter-frontend-{{ .Branch }}-{{ checksum "package.json" }}
 
   build:
-    working_directory: ~/kwetter-frontend
     executor: node
     steps:
       - attach_kwetter_workspace
@@ -88,7 +87,6 @@ jobs:
       - persist_kwetter_workspace
   
   lint:
-    working_directory: ~/kwetter-frontend
     executor: node
     steps:
       - attach_kwetter_workspace
@@ -99,7 +97,6 @@ jobs:
           command: npm run lint
 
   test:
-    working_directory: ~/kwetter-frontend
     executor: node
     steps:
       - attach_kwetter_workspace
@@ -113,7 +110,6 @@ jobs:
           path: junit
 
   sonarqube:
-    working_directory: ~/kwetter-frontend
     executor: node
     steps:
       - attach_kwetter_workspace
