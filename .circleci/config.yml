@@ -67,8 +67,8 @@ jobs:
       - attach_kwetter_workspace
       - restore_cache_dependencies
 
-      - run: npm install
       - run: ls
+      - run: npm install
 
       - save_cache:
           paths:
