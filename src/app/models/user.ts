@@ -2,7 +2,7 @@ import { Kwetter } from "./kwetter";
 import { Role } from "./role";
 
 export class User {
-    public id: string;
+    public userId: string;
     public email: string;
     public firstName: string;
     public lastName: string;
@@ -16,11 +16,11 @@ export class User {
     public followers: User[];
     public kwetters: Kwetter[];
 
-    constructor(id: string, email: string, firstName: string,
+    constructor(userId: string, email: string, firstName: string,
                 lastName: string, username: string, dateOfBirth: string,
                 bio: string, location: string, profilePicture: string,
                 role: Role, following: User[], followers: User[], kwetters: Kwetter[]) {
-        this.id = id;
+        this.userId = userId;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;

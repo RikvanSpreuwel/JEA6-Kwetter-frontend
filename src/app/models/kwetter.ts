@@ -1,14 +1,14 @@
 import { User } from "./user";
 
 export class Kwetter {
-    public id: string;
+    public kwetterId: string;
     public message: string;
     public postedOn: string;
     public author: User;
 
-    constructor(id: string, message: string,
+    constructor(kwetterId: string, message: string,
                 postedOn: string, author: User) {
-        this.id = id;
+        this.kwetterId = kwetterId;
         this.message = message;
         this.postedOn = postedOn;
         this.author = author;

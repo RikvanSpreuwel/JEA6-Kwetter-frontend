@@ -1,9 +1,10 @@
 {
-  "name": "kwetter",
-  "version": "0.0.0",
+  "name": "kwetter-frontend",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "sonar-scanner": "node_modules/sonar-scanner/bin/sonar-scanner.bat",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -50,6 +51,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-junit-reporter": "^1.2.0",
     "protractor": "~5.4.0",
+    "sonarqube-scanner": "^2.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~3.2.2"

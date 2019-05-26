@@ -16,7 +16,7 @@ import { UserService } from "src/app/services/api/user/user.service";
 })
 export class HomeComponent implements OnInit {
   public loggedInUser: User;
-  public timeline: Kwetter[];
+  public timeline: Kwetter[] = [];
 
   public postKwetterForm: FormGroup;
 
@@ -34,26 +34,34 @@ export class HomeComponent implements OnInit {
       kweet: new FormControl("", Validators.compose([Validators.required])),
     });
 
-    this.authenticationService.isLoggedIn() ? this.userService.getCurrentUser().subscribe((response) => {
-      this.loggedInUser = response as User;
+    if (!this.authenticationService.isLoggedIn()) {
+      this.router.navigate(["/login"]);
+    }
 
-      this.kwetterService.getTimeline(this.loggedInUser.id).subscribe((result) => {
-        this.timeline = result as Kwetter[];
-      });
-    })
-    : this.router.navigate(["/login"]);
+    this.initializeUserAndTimeline();
   }
 
   public postKwetter(kwetter) {
     if (kwetter === undefined || kwetter.kweet === undefined || kwetter.kweet === "") { return; }
 
-    this.kwetterService.createKwetter(kwetter.kweet, this.loggedInUser.id).subscribe((response) => {
+    this.kwetterService.createKwetter(kwetter.kweet, this.loggedInUser.userId).subscribe((response) => {
       if (response !== undefined) {
         this.loggedInUser.kwetters.push(response as Kwetter);
+        this.timeline.unshift(response as Kwetter);
         this.toastrService.success("", "Succesfully posted kweet: " + kwetter.kweet);
         this.getFormControl("kweet").setValue("");
       }
     });
+  }
+
+  private async initializeUserAndTimeline() {
+    this.loggedInUser = await this.userService.getCurrentUser();
+
+    if (this.loggedInUser["_links"]) {
+      this.kwetterService.getTimeline(this.loggedInUser["_links"].Timeline.href).subscribe((result) => {
+        this.timeline = result as Kwetter[];
+      });
+    }
   }
 
   /**

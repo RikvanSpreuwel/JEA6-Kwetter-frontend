@@ -25,10 +25,12 @@ export class ProfileComponent implements OnInit {
 
   public ngOnInit() {
     this.route.paramMap.subscribe((pmap) => this.getUser(pmap.get("id")));
-    this.userService.getCurrentUser().subscribe((response) => {
-      this.loggedInUser = response as User;
-      this.isBeingFollowedByLoggedInUser();
-    });
+    this.initializeCurrentUser();
+  }
+
+  private async initializeCurrentUser() {
+    this.loggedInUser = await this.userService.getCurrentUser();
+    this.isBeingFollowedByLoggedInUser();
   }
 
   private getUser(userId: string) {
@@ -39,7 +41,7 @@ export class ProfileComponent implements OnInit {
   }
 
   private follow() {
-    this.userService.followUser(this.loggedInUser.id, this.userProfile.id).subscribe((response) => {
+    this.userService.followUser(this.loggedInUser.userId, this.userProfile.userId).subscribe((response) => {
       if (response) {
         this.loggedInUser.following.push(this.userProfile);
         this.toastrService.success("Now following: " + this.userProfile.userName);
@@ -51,9 +53,10 @@ export class ProfileComponent implements OnInit {
   }
 
   private unfollow() {
-    this.userService.unFollowUser(this.loggedInUser.id, this.userProfile.id).subscribe((response) => {
+    this.userService.unFollowUser(this.loggedInUser.userId, this.userProfile.userId).subscribe((response) => {
       if (response) {
-        this.loggedInUser.following.filter((followedUser) => followedUser.id !== this.userProfile.id);
+        this.loggedInUser.following =
+            this.loggedInUser.following.filter((followedUser) => followedUser.userId !== this.userProfile.userId);
         this.toastrService.success("Stopped following: " + this.userProfile.userName);
         this.isBeingFollowedByLoggedInUser();
       } else {
@@ -67,8 +70,10 @@ export class ProfileComponent implements OnInit {
       this.loggedInUserFollowingUserProfile = false;
       return;
     }
+
+    this.loggedInUserFollowingUserProfile = false;
     this.loggedInUser.following.forEach((followedUser) => {
-      if ((followedUser.id) === this.userProfile.id) {
+      if ((followedUser.userId) === this.userProfile.userId) {
         this.loggedInUserFollowingUserProfile = true;
       }
     });
