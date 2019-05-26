@@ -54,6 +54,7 @@ commands:
             - kwetter-frontend-{{ .BuildNum }}-{{ checksum "package.json" }}
             - kwetter-frontend-
 
+              
 jobs: 
   checkout:
     executor: node
