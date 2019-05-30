@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { Title } from '@angular/platform-browser';
 import { Router } from "@angular/router";
+import { StompService } from "@stomp/ng2-stompjs";
 import { ToastrService } from "ngx-toastr";
+import { Subscription } from 'rxjs';
 import { Kwetter } from "src/app/models/kwetter";
-import { Role } from "src/app/models/role";
 import { User } from "src/app/models/user";
 import { AuthenticationService } from "src/app/services/api/authentication/authentication.service";
 import { KwetterService } from "src/app/services/api/kwetter/kwetter.service";
@@ -20,6 +22,9 @@ export class HomeComponent implements OnInit {
 
   public postKwetterForm: FormGroup;
 
+  private postedKwetterMessagesReceived: number = 0;
+  private topicSubscription: Subscription;
+
   constructor(
     private authenticationService: AuthenticationService,
     private kwetterService: KwetterService,
@@ -27,9 +32,13 @@ export class HomeComponent implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private router: Router,
+    private stompService: StompService,
+    private titleService: Title,
   ) { }
 
   public ngOnInit() {
+    this.initializeWebSocketConnection();
+
     this.postKwetterForm = this.formBuilder.group({
       kweet: new FormControl("", Validators.compose([Validators.required])),
     });
@@ -41,6 +50,11 @@ export class HomeComponent implements OnInit {
     this.initializeUserAndTimeline();
   }
 
+  public ngOnDestroy() {
+    this.topicSubscription.unsubscribe();
+    this.titleService.setTitle("Kwetter");
+  }
+
   public postKwetter(kwetter) {
     if (kwetter === undefined || kwetter.kweet === undefined || kwetter.kweet === "") { return; }
 
@@ -50,6 +64,17 @@ export class HomeComponent implements OnInit {
         this.timeline.unshift(response as Kwetter);
         this.toastrService.success("", "Succesfully posted kweet: " + kwetter.kweet);
         this.getFormControl("kweet").setValue("");
+      }
+    });
+  }
+
+  private initializeWebSocketConnection() {
+    this.topicSubscription = this.stompService.watch("/topic/tweets").subscribe((message) => {
+      if (message.body) {
+        if (this.loggedInUser.following.some((user) => user.userId === JSON.parse(message.body)["authorId"])) {
+          this.postedKwetterMessagesReceived++;
+          this.titleService.setTitle(`(${this.postedKwetterMessagesReceived}) Kwetter`);
+        }
       }
     });
   }
@@ -71,4 +96,11 @@ export class HomeComponent implements OnInit {
   private getFormControl(name: string) {
     return this.postKwetterForm.controls[name];
   }
+
+
+}
+
+export class Ding {
+  public authorId: string;
+  public postedOn: string;
 }

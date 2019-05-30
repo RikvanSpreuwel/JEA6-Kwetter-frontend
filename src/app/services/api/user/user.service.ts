@@ -47,54 +47,10 @@ export class UserService {
     });
   }
 
-
-  // public getCurrentUser(): User {
-  //   if (!this.currentUserSubject.value) {
-  //     this.http.get<User>(this.userApiUrl + "/getcurrentuser")
-  //       .pipe(map((res) => {
-  //         this.currentUserSubject.next(res as User);
-  //         console.log(this.currentUserSubject);
-  //         return this.currentUserSubject.value;
-  //       }));
-  //   } else {
-  //     return this.currentUserSubject.value;
-  //   }
-  // }
-  // public getCurrentUser(): Observable<User> {
-  //   console.log("kek");
-  //   if (!this.currentUserSubject.value) {
-  //     console.log("getcurrenuser");
-  //     this.http.get<User>(this.userApiUrl + "/getcurrentuser")
-  //       .pipe(catchError(this.handleError("getCurrentUser", undefined)))
-  //       .pipe(map((res) => {
-  //         this.currentUserSubject.next(res as User);
-  //         console.log(this.currentUserSubject);
-  //         return this.currentUserSubject.value;
-  //       }));
-  //       // .subscribe((res) => {
-  //       //   this.currentUserSubject.next(res as User);
-  //       //   return this.currentUserSubject.value;
-  //       // });
-  //   } else {
-  //     return this.currentUserSubject.value;
-  //   }
-  // }
-
-//   .pipe(map((response: any) => {
-//     // login successful if there's a jwt token in the response header
-//     if (response.headers.get('Authorization')) {
-//       let user = response.body;
-//       if (user) {
-//         // store user details and jwt token in local storage to keep user logged in between page refreshes
-//         user.token = response.headers.get('Authorization');
-//         localStorage.setItem('currentUser', JSON.stringify(user));
-//         this.currentUserSubject.next(user);
-//       }
-//     }
-
-//     return response;
-//   }
-// ));
+  public removeCurrentUser() {
+    this.currentUserSubject = new BehaviorSubject<User>(undefined);
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
 
   public followUser(userIdFollower: string, userIdToFollow: string): Observable < boolean > {
   return this.http.put<boolean>(this.userApiUrl + "/" + userIdFollower + "/follow/" + userIdToFollow, "")

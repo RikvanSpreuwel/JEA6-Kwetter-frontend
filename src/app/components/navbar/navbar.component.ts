@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { AuthenticationService } from "src/app/services/api/authentication/authentication.service";
+import { UserService } from "src/app/services/api/user/user.service";
 
 @Component({
   selector: "app-navbar",
@@ -15,6 +16,7 @@ export class NavbarComponent implements OnInit {
   constructor(
     public authenticationService: AuthenticationService,
     private toastrService: ToastrService,
+    private userService: UserService,
     private formBuilder: FormBuilder) {
       this.searchForm = formBuilder.group({
         searchParam : new FormControl(""),
@@ -26,6 +28,7 @@ export class NavbarComponent implements OnInit {
 
   private logout() {
     this.clearSearchParam();
+    this.userService.removeCurrentUser();
     this.authenticationService.logout();
     this.toastrService.success("", "Succesfully logged out.");
   }
