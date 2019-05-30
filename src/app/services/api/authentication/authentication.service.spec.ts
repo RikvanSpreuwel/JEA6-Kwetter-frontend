@@ -5,8 +5,8 @@ import { Routes } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { ToastrService } from "ngx-toastr";
-import { JwtHelperServiceStub } from "src/utils/test/jwtHelperServiceStub";
-import { ToastrServiceStub } from "src/utils/test/toastrServiceStub";
+import { ToastrServiceStub } from "src/utils/test/componentStubs/toastrServiceStub";
+import { JwtHelperServiceStub } from "src/utils/test/serviceSpies/jwtHelperServiceStub";
 import { AuthenticationService } from "./authentication.service";
 
 const routes: Routes = [

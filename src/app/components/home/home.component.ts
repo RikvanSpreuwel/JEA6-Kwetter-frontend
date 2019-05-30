@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { Title } from '@angular/platform-browser';
+import { Title } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { StompService } from "@stomp/ng2-stompjs";
 import { ToastrService } from "ngx-toastr";
-import { Subscription } from 'rxjs';
+import { Subscription } from "rxjs";
 import { Kwetter } from "src/app/models/kwetter";
 import { User } from "src/app/models/user";
 import { AuthenticationService } from "src/app/services/api/authentication/authentication.service";
@@ -96,11 +96,4 @@ export class HomeComponent implements OnInit {
   private getFormControl(name: string) {
     return this.postKwetterForm.controls[name];
   }
-
-
-}
-
-export class Ding {
-  public authorId: string;
-  public postedOn: string;
 }

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { Routes } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { KwetterService } from "src/app/services/api/kwetter/kwetter.service";
-import { KwetterServiceSpy } from "src/utils/test/kwetterServiceSpy";
+import { KwetterServiceSpy } from "src/utils/test/serviceSpies/kwetterServiceSpy";
 import { SearchResultsComponent } from "./search-results.component";
 
 const routes: Routes = [

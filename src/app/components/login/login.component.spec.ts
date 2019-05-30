@@ -4,8 +4,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ToastrService } from "ngx-toastr";
 import { AuthenticationService } from "src/app/services/api/authentication/authentication.service";
-import { AuthenticationServiceSpy } from "src/utils/test/authenticationServiceSpy";
-import { ToastrServiceStub } from "src/utils/test/toastrServiceStub";
+import { ToastrServiceStub } from "src/utils/test/componentStubs/toastrServiceStub";
+import { AuthenticationServiceSpy } from "src/utils/test/serviceSpies/authenticationServiceSpy";
 import { LoginComponent } from "./login.component";
 
 describe("LoginComponent", () => {

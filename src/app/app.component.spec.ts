@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
 import { async, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
-import { AppNavigationStubComponent } from "../utils/test/navigationBarStubComponent";
-import { RouterOutletStubComponent } from "../utils/test/routerOutletStubComponent";
+import { AppNavigationStubComponent } from "../utils/test/componentStubs/navigationBarStubComponent";
+import { RouterOutletStubComponent } from "../utils/test/componentStubs/routerOutletStubComponent";
 import { AppComponent } from "./app.component";
 
 describe("AppComponent", () => {
