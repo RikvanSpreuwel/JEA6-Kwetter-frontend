@@ -47,11 +47,9 @@ export class KwetterService {
   */
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
-      const response = error as HttpErrorResponse;
       console.error(error);
 
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
+      return of(result);
     };
   }
 

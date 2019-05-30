@@ -75,12 +75,11 @@ export class AuthenticationService {
   private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
       // Let the app keep running by returning an empty result.
-      return of(result as T);
+      return of(result);
     };
   }
 
   private saveToken(accessToken: string) {
-    const decodedToken = this.jwt.decodeToken(accessToken);
     this.accessToken = accessToken;
     localStorage.setItem(this.TOKEN_NAME, accessToken);
   }

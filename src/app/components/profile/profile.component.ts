@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
 
   private getUser(userId: string) {
     this.userService.getById(userId).subscribe((response) => {
-      this.userProfile = response as User;
+      this.userProfile = response;
       this.isBeingFollowedByLoggedInUser();
     });
   }

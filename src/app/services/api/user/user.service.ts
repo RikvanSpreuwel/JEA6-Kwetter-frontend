@@ -38,7 +38,7 @@ export class UserService {
         this.http.get<User>(this.userApiUrl + "/getcurrentuser")
           .pipe(map((res) => res))
           .subscribe((res) => {
-            this.currentUserSubject.next(res as User);
+            this.currentUserSubject.next(res);
             resolve(this.currentUserSubject.value);
           });
       } else {
@@ -73,11 +73,10 @@ export class UserService {
   */
   public handleError<T>(operation = "operation", result ?: T) {
   return (error: any): Observable<T> => {
-    const response = error as HttpErrorResponse;
     console.error(error);
 
     // Let the app keep running by returning an empty result.
-    return of(result as T);
+    return of(result);
   };
 }
 }

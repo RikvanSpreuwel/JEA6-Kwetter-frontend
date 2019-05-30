@@ -20,7 +20,7 @@ export class SearchResultsComponent implements OnInit {
 
   public ngOnInit() {
     this.kwetterService.searchByMessage(this.searchParam).subscribe((searchResults) => {
-      this.searchResults = searchResults as Kwetter[];
+      this.searchResults = searchResults;
     });
   }
 

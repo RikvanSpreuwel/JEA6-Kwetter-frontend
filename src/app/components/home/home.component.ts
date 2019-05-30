@@ -60,8 +60,8 @@ export class HomeComponent implements OnInit {
 
     this.kwetterService.createKwetter(kwetter.kweet, this.loggedInUser.userId).subscribe((response) => {
       if (response !== undefined) {
-        this.loggedInUser.kwetters.push(response as Kwetter);
-        this.timeline.unshift(response as Kwetter);
+        this.loggedInUser.kwetters.push(response);
+        this.timeline.unshift(response);
         this.toastrService.success("", "Succesfully posted kweet: " + kwetter.kweet);
         this.getFormControl("kweet").setValue("");
       }
@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
 
     if (this.loggedInUser["_links"]) {
       this.kwetterService.getTimeline(this.loggedInUser["_links"].Timeline.href).subscribe((result) => {
-        this.timeline = result as Kwetter[];
+        this.timeline = result;
       });
     }
   }
