@@ -151,4 +151,4 @@ jobs:
     steps:
       - attach_kwetter_workspace
       - restore_cache_dependencies
-      - publish_docker_image
+      - publish_to_dockerhub
