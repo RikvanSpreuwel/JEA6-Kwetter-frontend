@@ -27,6 +27,12 @@ workflows:
             - build
           context:
             Kwetter
+      
+      - publish-dockerhub:
+          requires:
+            - sonarqube
+          context:
+            Kwetter
 
 
 executors:
@@ -53,6 +59,20 @@ commands:
           keys: 
             - kwetter-frontend-{{ .BuildNum }}-{{ checksum "package.json" }}
             - kwetter-frontend-
+
+  publish_to_dockerhub:
+    steps:
+      - run:
+          name: Docker login
+          command: docker login -u {$DOCKER_USERNAME} -p {$DOCKER_PASSWORD}
+
+      - run:
+          name: Docker build image
+          command: docker build -t {$DOCKER_USERNAME}/kwetter-frontend:{$CIRCLE_BRANCH}-{CIRCLE_BUILD_NUM} .
+
+      - run:
+          name: Docker push
+          command: docker push {$DOCKER_USERNAME}/kwetter-frontend:{$CIRCLE_BRANCH}-{CIRCLE_BUILD_NUM}
 
               
 jobs: 
@@ -125,3 +145,10 @@ jobs:
       - run:
           name: Run Sonarqube
           command: sonar-scanner -D"sonar.projectKey=RikvanSpreuwel_JEA6-Kwetter-frontend" -D"sonar.organization=rikvanspreuwel-github" -D"sonar.sources=." -D"sonar.host.url=https://sonarcloud.io" -D"sonar.login=$SONAR_LOGIN_BACKEND"
+
+  publish-dockerhub:
+    machine: true
+    steps:
+      - attach_kwetter_workspace
+      - restore_cache_dependencies
+      - publish_docker_image
