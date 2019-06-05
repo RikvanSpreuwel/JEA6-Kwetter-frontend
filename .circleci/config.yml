@@ -30,6 +30,8 @@ workflows:
       
       - publish-dockerhub:
           requires:
+            - lint
+            - test
             - sonarqube
           context:
             Kwetter
@@ -64,15 +66,15 @@ commands:
     steps:
       - run:
           name: Docker login
-          command: docker login -u {$DOCKER_USERNAME} -p {$DOCKER_PASSWORD}
+          command: docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
 
       - run:
           name: Docker build image
-          command: docker build -t {$DOCKER_USERNAME}/kwetter-frontend:{$CIRCLE_BRANCH}-{CIRCLE_BUILD_NUM} .
+          command: docker build -t "${DOCKER_USERNAME}"/kwetter-frontend:"${CIRCLE_BRANCH}"-"${CIRCLE_BUILD_NUM}" .
 
       - run:
           name: Docker push
-          command: docker push {$DOCKER_USERNAME}/kwetter-frontend:{$CIRCLE_BRANCH}-{CIRCLE_BUILD_NUM}
+          command: docker push "${DOCKER_USERNAME}"/kwetter-frontend:"${CIRCLE_BRANCH}"-"${CIRCLE_BUILD_NUM}"
 
               
 jobs: 
