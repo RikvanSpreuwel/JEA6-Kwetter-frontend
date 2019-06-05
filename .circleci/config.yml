@@ -75,7 +75,6 @@ commands:
       - run:
           name: Docker push
           command: docker push "${DOCKER_USERNAME}"/kwetter-frontend:"${CIRCLE_BRANCH}"-"${CIRCLE_BUILD_NUM}"
-
               
 jobs: 
   checkout:
