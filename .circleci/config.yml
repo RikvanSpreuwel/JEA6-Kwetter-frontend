@@ -93,11 +93,11 @@ commands:
 
       - run:
           name: Docker build image latest
-          command: docker build -t "${DOCKER_USERNAME}"/kwetter-frontend:"${CIRCLE_BRANCH}":latest .
+          command: docker build -t "${DOCKER_USERNAME}"/kwetter-frontend:"${CIRCLE_BRANCH}"-latest .
 
       - run:
           name: Docker push image latest
-          command: docker push "${DOCKER_USERNAME}"/kwetter-frontend:"${CIRCLE_BRANCH}":latest
+          command: docker push "${DOCKER_USERNAME}"/kwetter-frontend:"${CIRCLE_BRANCH}"-latest
     
   publish_with_version_to_dockerhub:
     steps:
