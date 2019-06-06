@@ -44,7 +44,7 @@ export class AuthenticationService {
     const headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     headers.append("Authorization", "Basic " + btoa(this.TOKEN_AUTH_CLIENTID + ":" + this.TOKEN_AUTH_CLIENTSECRET));
-
+    
     return this.http.post(environment.webApiBaseUrl + this.LOGIN_URL, body, { headers })
       .pipe(map((res) => res.json()))
       .pipe(catchError(this.handleError("login", [])))
