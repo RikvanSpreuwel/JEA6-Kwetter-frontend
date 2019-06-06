@@ -29,6 +29,7 @@ workflows:
             Kwetter
       
       - publish-dockerhub:
+          filters: { only: "master", "release", "develop"}
           requires:
             - lint
             - test
@@ -63,21 +64,21 @@ commands:
             - kwetter-frontend-
 
   publish_to_dockerhub:
+    # steps:
+      # - when:
+      #     condition: "${CIRCLE_BRANCH}" == "Master" || "Develop" || "Release"
     steps:
-      - when:
-          condition: "${CIRCLE_BRANCH}" == "Master" || "Develop" || "Release"
-          steps:
-            - run:
-                name: Docker login
-                command: docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
+      - run:
+          name: Docker login
+          command: docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
 
-            - run:
-                name: Docker build image
-                command: docker build -t "${DOCKER_USERNAME}"/kwetter-frontend:"${CIRCLE_BRANCH}"-"${CIRCLE_BUILD_NUM}" .
+      - run:
+          name: Docker build image
+          command: docker build -t "${DOCKER_USERNAME}"/kwetter-frontend:"${CIRCLE_BRANCH}"-"${CIRCLE_BUILD_NUM}" .
 
-            - run:
-                name: Docker push
-                command: docker push "${DOCKER_USERNAME}"/kwetter-frontend:"${CIRCLE_BRANCH}"-"${CIRCLE_BUILD_NUM}"
+      - run:
+          name: Docker push
+          command: docker push "${DOCKER_USERNAME}"/kwetter-frontend:"${CIRCLE_BRANCH}"-"${CIRCLE_BUILD_NUM}"
               
 jobs: 
   checkout:
