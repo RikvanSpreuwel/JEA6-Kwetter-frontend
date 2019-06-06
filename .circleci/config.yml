@@ -7,16 +7,16 @@ workflows:
       - checkout
 
       - approve-dockerhub-publish:
-          filters:
-            branches:
-              only:
-                  - master
-                  - release
           type: approval
           requires:
             - sonarqube
             - lint
             - test
+          filters:
+            branches:
+              only:
+                  - master
+                  - release
 
       - dependencies:
           requires:
