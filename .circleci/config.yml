@@ -76,7 +76,7 @@ commands:
     steps:
       - run:
           name: Set version environment variable
-          command: export VERSION=$(npm run version --silent)
+          command: echo 'export VERSION=$(npm run version --silent)' >> $BASH_ENV
 
       - run:
           name: Docker login
@@ -95,22 +95,6 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run:
-          name: Set version environment variable
-          command: echo 'export VERSION=$(npm run version --silent)' >> $BASH_ENV
-
-      - run:
-          name: check version set
-          command: echo $VERSION
-      
-      - run: 
-          name: cehck again
-          command: echo VERSION
-
-      - run: 
-          name: again
-          command: echo "${VERSION}"
-
       - persist_kwetter_workspace
   
   dependencies:
