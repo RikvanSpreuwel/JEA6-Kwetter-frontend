@@ -34,8 +34,8 @@ workflows:
               only:
                   - master
                   - release
-                  - development
-                  
+                  - develop
+
           requires:
             - lint
             - test
