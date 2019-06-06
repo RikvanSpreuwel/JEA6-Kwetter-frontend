@@ -75,16 +75,20 @@ commands:
       #     condition: "${CIRCLE_BRANCH}" == "Master" || "Develop" || "Release"
     steps:
       - run:
+          name: Set version environment variable
+          command: export VERSION=$(npm run version --silent)
+
+      - run:
           name: Docker login
           command: docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
 
       - run:
           name: Docker build image
-          command: docker build -t "${DOCKER_USERNAME}"/kwetter-frontend:"${CIRCLE_BRANCH}"-"${CIRCLE_BUILD_NUM}" .
+          command: docker build -t "${DOCKER_USERNAME}"/kwetter-frontend:"${CIRCLE_BRANCH}"-"${VERSION}" .
 
       - run:
           name: Docker push
-          command: docker push "${DOCKER_USERNAME}"/kwetter-frontend:"${CIRCLE_BRANCH}"-"${CIRCLE_BUILD_NUM}"
+          command: docker push "${DOCKER_USERNAME}"/kwetter-frontend:"${CIRCLE_BRANCH}"-"${VERSION}"
               
 jobs: 
   checkout:
