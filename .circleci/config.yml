@@ -6,6 +6,18 @@ workflows:
     jobs:
       - checkout
 
+      - approve-dockerhub-publish:
+          filters:
+            branches:
+              only:
+                  - master
+                  - release
+          type: approval
+          requires:
+            - sonarqube
+            - lint
+            - test
+
       - dependencies:
           requires:
             - checkout
@@ -27,18 +39,6 @@ workflows:
             - build
           context:
             Kwetter
-
-      - approve-dockerhub-publish:
-          filters:
-            branches:
-              only:
-                  - master
-                  - release
-          type: approval
-          requires:
-            - sonarqube
-            - lint
-            - test
 
       - publish-latest-dockerhub:
           filters:
