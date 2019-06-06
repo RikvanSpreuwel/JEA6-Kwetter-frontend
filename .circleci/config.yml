@@ -29,7 +29,13 @@ workflows:
             Kwetter
       
       - publish-dockerhub:
-          filters: { only: "master", "release", "develop"}
+          filters:
+            branches:
+              only:
+                  - master
+                  - release
+                  - development
+                  
           requires:
             - lint
             - test
