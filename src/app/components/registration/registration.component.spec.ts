@@ -4,42 +4,33 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Routes } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ToastrService } from "ngx-toastr";
-import { AuthenticationService } from "src/app/services/api/authentication/authentication.service";
 import { UserService } from "src/app/services/api/user/user.service";
 import { ToastrServiceStub } from "src/utils/test/componentStubs/toastrServiceStub";
-import { AuthenticationServiceSpy } from "src/utils/test/serviceSpies/authenticationServiceSpy";
 import { UserServiceSpy } from "src/utils/test/serviceSpies/userServiceSpy";
-import { LoginComponent } from "./login.component";
+import { RegistrationComponent } from "./registration.component";
 
 const routes: Routes = [
   {path: "", redirectTo: "/", pathMatch: "full"},
 ];
 
-
-describe("LoginComponent", () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+describe("RegistrationComponent", () => {
+  let component: RegistrationComponent;
+  let fixture: ComponentFixture<RegistrationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        declarations: [ LoginComponent ],
-        imports: [FormsModule, ReactiveFormsModule, RouterTestingModule.withRoutes(routes)],
+      declarations: [ RegistrationComponent ],
+      imports: [FormsModule, ReactiveFormsModule, RouterTestingModule.withRoutes(routes)],
         providers: [
-            { provide: AuthenticationService, useValue: {} },
             { provide: ToastrService, useValue: ToastrServiceStub },
             { provide: UserService, useValue: UserServiceSpy },
         ],
-    }).overrideComponent(LoginComponent, {
-        set: {
-            providers: [
-                { provide: AuthenticationService, useClass: AuthenticationServiceSpy },
-            ],
-        },
-    }).compileComponents();
+    })
+    .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(RegistrationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

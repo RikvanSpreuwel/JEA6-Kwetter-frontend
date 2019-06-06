@@ -20,6 +20,12 @@ export class UserService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
+  public registerUser(body): Observable<User> {
+    return this.http.post<User>(this.userApiUrl, body)
+      .pipe(catchError(this.handleError("get", undefined)))
+      .pipe(map((res) => res));
+  }
+
   public get(): Observable<User[]> {
     return this.http.get<User[]>(this.userApiUrl)
       .pipe(catchError(this.handleError("get", [])))
