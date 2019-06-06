@@ -1,13 +1,15 @@
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { Title } from "@angular/platform-browser";
+import { Router } from "@angular/router";
+import { StompService } from "@stomp/ng2-stompjs";
+import { ToastrService } from "ngx-toastr";
+import { Subscription } from "rxjs";
 import { Kwetter } from "src/app/models/kwetter";
 import { User } from "src/app/models/user";
+import { AuthenticationService } from "src/app/services/api/authentication/authentication.service";
 import { KwetterService } from "src/app/services/api/kwetter/kwetter.service";
 import { UserService } from "src/app/services/api/user/user.service";
-import { Role } from 'src/app/models/role';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from 'src/app/services/api/authentication/authentication.service';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: "app-home",
@@ -16,9 +18,12 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class HomeComponent implements OnInit {
   public loggedInUser: User;
-  public timeline: Kwetter[];
+  public timeline: Kwetter[] = [];
 
   public postKwetterForm: FormGroup;
+
+  private postedKwetterMessagesReceived: number = 0;
+  private topicSubscription: Subscription;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -27,34 +32,61 @@ export class HomeComponent implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private router: Router,
+    private stompService: StompService,
+    private titleService: Title,
   ) { }
 
   public ngOnInit() {
+    this.initializeWebSocketConnection();
+
     this.postKwetterForm = this.formBuilder.group({
       kweet: new FormControl("", Validators.compose([Validators.required])),
     });
 
-    this.authenticationService.isLoggedIn() ? this.userService.getCurrentUser().subscribe((response) => {
-      this.loggedInUser = response as User;
+    if (!this.authenticationService.isLoggedIn()) {
+      this.router.navigate(["/login"]);
+    }
 
-      this.kwetterService.getTimeline(this.loggedInUser.id).subscribe((response) => {
-        this.timeline = response as Kwetter[];
-        console.log(this.timeline);
-      });
-    })
-    : this.router.navigate(["/login"]);
+    this.initializeUserAndTimeline();
+  }
+
+  public ngOnDestroy() {
+    this.topicSubscription.unsubscribe();
+    this.titleService.setTitle("Kwetter");
   }
 
   public postKwetter(kwetter) {
-    if (kwetter === undefined || kwetter.kweet === undefined|| kwetter.kweet === "") { return; }
+    if (kwetter === undefined || kwetter.kweet === undefined || kwetter.kweet === "") { return; }
 
-    this.kwetterService.createKwetter(kwetter.kweet, this.loggedInUser.id).subscribe((response) => {
+    this.kwetterService.createKwetter(kwetter.kweet, this.loggedInUser.userId).subscribe((response) => {
       if (response !== undefined) {
-        this.loggedInUser.kwetters.push(response as Kwetter);
+        this.loggedInUser.kwetters.push(response);
+        this.timeline.unshift(response);
         this.toastrService.success("", "Succesfully posted kweet: " + kwetter.kweet);
         this.getFormControl("kweet").setValue("");
       }
     });
+  }
+
+  private initializeWebSocketConnection() {
+    this.topicSubscription = this.stompService.watch("/topic/tweets").subscribe((message) => {
+      if (message.body) {
+        if (this.loggedInUser.following.some((user) => user.userId === JSON.parse(message.body)["authorId"])) {
+          this.postedKwetterMessagesReceived++;
+          this.titleService.setTitle(`(${this.postedKwetterMessagesReceived}) Kwetter`);
+        }
+      }
+    });
+  }
+
+  private async initializeUserAndTimeline() {
+    this.loggedInUser = await this.userService.getCurrentUser();
+
+    if (this.loggedInUser["_links"]) {
+      this.kwetterService.getTimeline(this.loggedInUser["_links"].Timeline.href).subscribe((result) => {
+        this.timeline = result;
+      });
+    }
   }
 
   /**

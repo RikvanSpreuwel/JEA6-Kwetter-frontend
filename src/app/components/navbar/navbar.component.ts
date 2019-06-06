@@ -1,31 +1,34 @@
 import { Component, OnInit } from "@angular/core";
-import { AuthenticationService } from 'src/app/services/api/authentication/authentication.service';
-import { ToastrService } from 'ngx-toastr';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { ToastrService } from "ngx-toastr";
+import { AuthenticationService } from "src/app/services/api/authentication/authentication.service";
+import { UserService } from "src/app/services/api/user/user.service";
 
 @Component({
   selector: "app-navbar",
+  styleUrls: ["./navbar.component.css"],
   templateUrl: "./navbar.component.html",
-  styleUrls: ["./navbar.component.css"]
 })
 export class NavbarComponent implements OnInit {
-  private searchForm: FormGroup;
   public searchParam: string = "";
+  private searchForm: FormGroup;
 
   constructor(
     public authenticationService: AuthenticationService,
     private toastrService: ToastrService,
+    private userService: UserService,
     private formBuilder: FormBuilder) {
       this.searchForm = formBuilder.group({
         searchParam : new FormControl(""),
       });
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
   private logout() {
     this.clearSearchParam();
+    this.userService.removeCurrentUser();
     this.authenticationService.logout();
     this.toastrService.success("", "Succesfully logged out.");
   }

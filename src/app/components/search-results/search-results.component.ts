@@ -1,26 +1,26 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { KwetterService } from 'src/app/services/api/kwetter/kwetter.service';
-import { Kwetter } from 'src/app/models/kwetter';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { Kwetter } from "src/app/models/kwetter";
+import { KwetterService } from "src/app/services/api/kwetter/kwetter.service";
 
 @Component({
-  selector: 'app-search-results',
-  templateUrl: './search-results.component.html',
-  styleUrls: ['./search-results.component.css']
+  selector: "app-search-results",
+  styleUrls: ["./search-results.component.css"],
+  templateUrl: "./search-results.component.html",
 })
 export class SearchResultsComponent implements OnInit {
   @Input() public searchParam: string;
-  @Output() clearSearchParam = new EventEmitter();
+  @Output() public clearSearchParam = new EventEmitter();
 
   public searchResults: Kwetter[] = [];
 
   constructor(
-    private kwetterService: KwetterService) { 
+    private kwetterService: KwetterService) {
    }
 
-  ngOnInit() {
-    this.kwetterService.searchByMessage(this.searchParam).subscribe((searchResults) => { 
-      this.searchResults = searchResults as Kwetter[];
+  public ngOnInit() {
+    this.kwetterService.searchByMessage(this.searchParam).subscribe((searchResults) => {
+      this.searchResults = searchResults;
     });
   }
 
