@@ -29,6 +29,13 @@ workflows:
             Kwetter
       
       - publish-dockerhub:
+          filters:
+            branches:
+              only:
+                  - master
+                  - release
+                  - development
+                  
           requires:
             - lint
             - test
@@ -63,6 +70,9 @@ commands:
             - kwetter-frontend-
 
   publish_to_dockerhub:
+    # steps:
+      # - when:
+      #     condition: "${CIRCLE_BRANCH}" == "Master" || "Develop" || "Release"
     steps:
       - run:
           name: Docker login

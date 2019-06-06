@@ -24,18 +24,18 @@ export class AuthenticationService {
     private router: Router,
   ) { }
 
-  public login(userName: string, password: string) {
-    this.requestToken(userName, password).subscribe((tokenResponse) => {
-      if (tokenResponse) {
-        this.saveToken(tokenResponse);
-        this.toastrService.success("", "Succesfully logged in!");
-        this.router.navigate(["/"]);
-      } else {
-        this.toastrService.error("", "Incorrect login credentials!");
-      }
+  public login(userName: string, password: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.requestToken(userName, password).subscribe((tokenResponse) => {
+        if (tokenResponse) {
+          this.saveToken(tokenResponse);
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
     });
   }
-
 
   public requestToken(userName: string, password: string): Observable<any> {
     const body = `username=${encodeURIComponent(userName)}` +

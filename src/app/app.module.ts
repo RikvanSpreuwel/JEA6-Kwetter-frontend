@@ -13,6 +13,7 @@ import { HomeComponent } from "./components/home/home.component";
 import { LoginComponent } from "./components/login/login.component";
 import { NavbarComponent } from "./components/navbar/navbar.component";
 import { ProfileComponent } from "./components/profile/profile.component";
+import { RegistrationComponent } from "./components/registration/registration.component";
 import { SearchResultsComponent } from "./components/search-results/search-results.component";
 import { JwtHttpInterceptor } from "./interceptors/jwtHttpInterceptor";
 import { AppRoutingModule } from "./routing/app-routing.module";
@@ -37,6 +38,7 @@ export const jwtConfig = {
     NavbarComponent,
     LoginComponent,
     SearchResultsComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,
