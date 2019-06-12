@@ -49,7 +49,10 @@ workflows:
                   - release
                   - develop
           requires:
-            - approve-dockerhub-publish
+            # - approve-dockerhub-publish
+              - lint
+              - test
+              - sonarqube
           context:
             Kwetter
 
@@ -61,7 +64,10 @@ workflows:
                   - release
                   - develop
           requires:
-            - approve-dockerhub-publish
+            # - approve-dockerhub-publish
+              - lint
+              - test
+              - sonarqube
           context:
             Kwetter
 
