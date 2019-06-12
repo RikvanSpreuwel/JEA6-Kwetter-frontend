@@ -28,18 +28,18 @@ workflows:
           context:
             Kwetter
 
-      - approve-dockerhub-publish:
-          filters:
-            branches:
-              only:
-                  - master
-                  - release
-                  - develop
-          type: approval
-          requires:
-            - sonarqube
-            - lint
-            - test
+      # - approve-dockerhub-publish:
+      #     filters:
+      #       branches:
+      #         only:
+      #             - master
+      #             - release
+      #             - develop
+      #     type: approval
+      #     requires:
+      #       - sonarqube
+      #       - lint
+      #       - test
 
       - publish-latest-dockerhub:
           filters:
