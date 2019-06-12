@@ -1,6 +1,6 @@
 import { InjectableRxStompConfig, StompConfig } from "@stomp/ng2-stompjs";
 import * as SockJS from "sockjs-client";
-import { environment } from "src/environments/environment.prod";
+import { environment } from "src/environments/environment";
 import { socketProvider } from "./socketProvider";
 
 export const KwetterStompConfig: StompConfig = {
