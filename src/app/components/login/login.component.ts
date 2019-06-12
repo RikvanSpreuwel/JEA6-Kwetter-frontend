@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
       this.toastrService.error("", "Username and password are required");
       return;
     }
+    
     const loggedIn: boolean = await this.authenticationService.login(credentials.username, credentials.password);
     if (loggedIn) {
       const loggedInUser: User = await this.userService.getCurrentUser();
